@@ -4,7 +4,9 @@ import dotenv from "dotenv"
 import { corsOptions } from "./constants/constants.js";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import {v2 as cloudinary} from "cloudinary"
 import UserRoute from "./routes/UserRoute.js"
+import  RestaurantRoute  from "./routes/RestaurantRoute.js"
 
 dotenv.config({
     path:"./.env"
@@ -12,6 +14,12 @@ dotenv.config({
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("MongoDB Connected..."))
 
+
+cloudinary.config({
+    cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
+    api_key:process.env.CLOUDINARY_API_KEY,
+    api_secret:process.env.CLOUDINARY_API_SECRET
+})
 
 const app=express();
 const PORT=process.env.PORT || 3000
@@ -29,6 +37,7 @@ app.get("/health",async(req,res)=>{
 })
 
 app.use("/api/v1/user",UserRoute);
+app.use("/api/v1/restaurant",RestaurantRoute)
 
 
 app.listen(PORT,()=>{

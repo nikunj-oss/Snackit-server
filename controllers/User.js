@@ -22,7 +22,7 @@ export const createCurrentUser=async (req,res)=>{
     }
     catch(e){
         console.log(e);
-        res.status(500).json("Error Creating a User")
+        res.status(500).json({message:"Error Creating a User"})
     }
 }
 
@@ -32,7 +32,7 @@ export const updateCurrentUser=async (req,res)=>{
         const user=await User.findById(req.userId);
 
         if(!user){
-            return res.status(404).json("User Not Found")
+            return res.status(404).json({message:"User Not Found"})
         }
         user.name=name
         user.addressLine1=addressLine1;
@@ -46,7 +46,7 @@ export const updateCurrentUser=async (req,res)=>{
     }
     catch(e){
         console.log(e);
-        res.status(500).json("Error Updating a User")
+        res.status(500).json({message:"Error Updating a User"})
     }
 }
 
@@ -57,14 +57,14 @@ export const getUserProfile=async (req,res)=>{
         const user=await User.findById(req.userId);
 
         if(!user){
-            return res.status(404).json("User not found")
+            return res.status(404).json({message:"User not found"})
         }
 
         res.json(user);
 
     } catch (error) {
         console.log(error)
-        res.status(500).json("Error finding the user")
+        res.status(500).json({message:"Error finding the user"})
     }
 
 }
